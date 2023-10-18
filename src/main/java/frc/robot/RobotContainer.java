@@ -30,8 +30,20 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kStart.value);
 
+    private final JoystickButton intakeSuckButton = new JoystickButton(driver, 5);
+    private final JoystickButton intakeSpitButton = new JoystickButton(driver, 6);
+    private final JoystickButton armUpButton = new JoystickButton(driver, 3);
+    private final JoystickButton armDownButton = new JoystickButton(driver, 2);
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final ArmSubsystem armSubsystem = new ArmSubsystem();
+
+    private final IntakeCommand intakeSuck = new IntakeCommand(armSubsystem, 0.55);
+    private final IntakeCommand intakeSpit = new IntakeCommand(armSubsystem, -0.85);
+
+    private final ArmManualCommand armUp = new ArmManualCommand(armSubsystem, -0.8);
+    private final ArmManualCommand armDown = new ArmManualCommand(armSubsystem, 0.8);
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */

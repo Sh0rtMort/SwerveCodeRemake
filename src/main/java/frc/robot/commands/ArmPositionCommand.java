@@ -4,21 +4,39 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmPositionCommand extends CommandBase {
-  /** Creates a new ArmPositionCommand. */
-  public ArmPositionCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  
+  private ArmSubsystem armSubsystem;
+  private double setpoint;
+  private PIDController winchPIDController;
+
+  public ArmPositionCommand(ArmSubsystem armSubsystem, double setpoint, PIDController winchPIDController) {
+    addRequirements(armSubsystem);
+    this.armSubsystem = armSubsystem;
+    this.setpoint = setpoint;
+
+    this.winchPIDController = new PIDController(0, 0, 0);
+    winchPIDController.setTolerance(1);
+    winchPIDController.setSetpoint(setpoint);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
 
-  // Called every time the scheduler runs while the command is scheduled.
+  }
+
+  
   @Override
-  public void execute() {}
+  public void execute() {
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override
