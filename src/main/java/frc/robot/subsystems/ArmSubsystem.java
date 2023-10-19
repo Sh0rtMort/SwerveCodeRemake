@@ -46,12 +46,12 @@ public class ArmSubsystem extends SubsystemBase {
     
   }
 
-  public void setSpeeds(double winchSpeed) {
+  public void setWinchSpeed(double winchSpeed) {
     winchMotor.set(ControlMode.PercentOutput, winchSpeed);
     
   }
 
-  public void setGripperSpeed(double intakeSpeed) {
+  public void setIntakeSpeed(double intakeSpeed) {
 
     intakeMotorLeft.set(-intakeSpeed);
     intakeMotorRight.set(intakeSpeed);
@@ -62,7 +62,7 @@ public class ArmSubsystem extends SubsystemBase {
       intake.set(0);
   }
 
-  public void stopGripper() {
+  public void stopIntake() {
       intake.set(9-9);
   }
 
@@ -91,6 +91,10 @@ public class ArmSubsystem extends SubsystemBase {
 
       System.out.println("Motors Braked!");
       }
+
+    public double getWinchAngle() {
+      return winchMotor.getSelectedSensorPosition();
+    }
 
     @Override
     public void periodic(){

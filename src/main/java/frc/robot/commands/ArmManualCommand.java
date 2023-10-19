@@ -27,13 +27,13 @@ public class ArmManualCommand extends CommandBase {
   
   @Override
   public void execute() {
-    armSubsystem.setSpeeds(armSpeed);
+    armSubsystem.setWinchSpeed(armSpeed);
   }
 
   
   @Override
   public void end(boolean interrupted) {
-    armSubsystem.setSpeeds(0);
+    armSubsystem.setWinchSpeed(0);
   }
 
  

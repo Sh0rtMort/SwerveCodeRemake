@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.*;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,10 +34,13 @@ public class RobotContainer {
 
     private final JoystickButton intakeSuckButton = new JoystickButton(driver, 5);
     private final JoystickButton intakeSpitButton = new JoystickButton(driver, 6);
-    private final JoystickButton armUpButton = new JoystickButton(driver, 3);
-    private final JoystickButton armDownButton = new JoystickButton(driver, 2);
+    private final JoystickButton armUpButton = new JoystickButton(driver, Axis.kLeftTrigger.value);
+    private final JoystickButton armDownButton = new JoystickButton(driver, Axis.kRightTrigger.value);
+    private final JoystickButton armPickupButton = new JoystickButton(driver, Button.kA.value);
+    private final JoystickButton armStoreButton = new JoystickButton(driver, Button.kB.value);
+    private final JoystickButton armPlaceButton = new JoystickButton(driver, Button.kX.value);
 
-    /* Subsystems */
+    
     private final Swerve s_Swerve = new Swerve();
     private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
@@ -44,6 +49,10 @@ public class RobotContainer {
 
     private final ArmManualCommand armUp = new ArmManualCommand(armSubsystem, -0.8);
     private final ArmManualCommand armDown = new ArmManualCommand(armSubsystem, 0.8);
+
+    private final ArmPositionCommand armPickupPosition = new ArmPositionCommand(armSubsystem, 15000);
+    private final ArmPositionCommand armStorePosition = new ArmPositionCommand(armSubsystem, 5000);
+    private final ArmPositionCommand armMiddleConePlace = new ArmPositionCommand(armSubsystem, 10000);
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -66,6 +75,17 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+        intakeSuckButton.whileTrue(intakeSuck);
+        intakeSpitButton.whileTrue(intakeSpit);
+
+        armDownButton.whileTrue(armDown);
+        armUpButton.whileTrue(armUp);
+
+        armStoreButton.whileTrue(armStorePosition);
+        armPickupButton.whileTrue(armPickupPosition);
+        armPlaceButton.whileTrue(armMiddleConePlace);
+
     }
 
     /**

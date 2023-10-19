@@ -15,12 +15,12 @@ public class ArmPositionCommand extends CommandBase {
   private double setpoint;
   private PIDController winchPIDController;
 
-  public ArmPositionCommand(ArmSubsystem armSubsystem, double setpoint, PIDController winchPIDController) {
+  public ArmPositionCommand(ArmSubsystem armSubsystem, double setpoint) {
     addRequirements(armSubsystem);
     this.armSubsystem = armSubsystem;
     this.setpoint = setpoint;
 
-    this.winchPIDController = new PIDController(0, 0, 0);
+    this.winchPIDController = new PIDController(0.002, 0, 0);
     winchPIDController.setTolerance(1);
     winchPIDController.setSetpoint(setpoint);
 
@@ -35,7 +35,8 @@ public class ArmPositionCommand extends CommandBase {
   
   @Override
   public void execute() {
-    
+    double winchSpeed = winchPIDController.calculate(armSubsystem.getWinchAngle());
+    armSubsystem.setWinchSpeed(winchSpeed);
   }
 
   // Called once the command ends or is interrupted.
