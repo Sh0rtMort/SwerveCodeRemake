@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,7 +23,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final XboxController driver = new XboxController(0);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -35,7 +37,7 @@ public class RobotContainer {
     private final JoystickButton intakeSuckButton = new JoystickButton(driver, 5);
     private final JoystickButton intakeSpitButton = new JoystickButton(driver, 6);
     private final JoystickButton armUpButton = new JoystickButton(driver, Axis.kLeftTrigger.value);
-    private final JoystickButton armDownButton = new JoystickButton(driver, Axis.kRightTrigger.value);
+    private final JoystickButton armDownButton = new JoystickButton(driver, Axis.kLeftTrigger.value);
     private final JoystickButton armPickupButton = new JoystickButton(driver, Button.kA.value);
     private final JoystickButton armStoreButton = new JoystickButton(driver, Button.kB.value);
     private final JoystickButton armPlaceButton = new JoystickButton(driver, Button.kX.value);
@@ -69,6 +71,7 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+        armSubsystem.zeroWinchEncoder();
     }
 
     

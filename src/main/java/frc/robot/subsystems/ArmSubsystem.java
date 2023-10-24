@@ -42,7 +42,7 @@ public class ArmSubsystem extends SubsystemBase {
     intakeMotorLeft.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 60);
     intakeMotorRight.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 60);
 
-    intakeMotorLeft.setInverted(true);
+    intakeMotorLeft.setInverted(false);
     
   }
 
@@ -52,52 +52,53 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double intakeSpeed) {
-
     intakeMotorLeft.set(-intakeSpeed);
     intakeMotorRight.set(intakeSpeed);
   }
 
   public void stopAllMotors() {
-      winchMotor.set(ControlMode.PercentOutput, 0);
-      intake.set(0);
+    winchMotor.set(ControlMode.PercentOutput, 0);
+    intake.set(0);
   }
 
   public void stopIntake() {
-      intake.set(9-9);
+    intake.set(9-9);
   }
 
   public void zeroAllEncoders() {
-      winchMotor.setSelectedSensorPosition(0);
-      intakeMotorLeft.getEncoder().setPosition(0);
-      intakeMotorRight.getEncoder().setPosition(0);
+    winchMotor.setSelectedSensorPosition(0);
+    intakeMotorLeft.getEncoder().setPosition(0);
+    intakeMotorRight.getEncoder().setPosition(0);
 
     System.out.println("Arm Encoders Zeroed");
   }
 
-    public void releaseAllMotors() {
+  public void zeroWinchEncoder() {
+    winchMotor.setSelectedSensorPosition(0);
+  }
 
+  public void releaseAllMotors() {
     winchMotor.setNeutralMode(NeutralMode.Coast);
     intakeMotorLeft.setIdleMode(IdleMode.kCoast);
     intakeMotorRight.setIdleMode(IdleMode.kCoast);
 
     System.out.println("Motors Released!");
-    }
+  }
 
-    public void brakeAllMotors() {
+  public void brakeAllMotors() {
+    winchMotor.setNeutralMode(NeutralMode.Brake);
+    intakeMotorLeft.setIdleMode(IdleMode.kBrake);
+    intakeMotorRight.setIdleMode(IdleMode.kBrake);
 
-        winchMotor.setNeutralMode(NeutralMode.Brake);
-        intakeMotorLeft.setIdleMode(IdleMode.kBrake);
-        intakeMotorRight.setIdleMode(IdleMode.kBrake);
+    System.out.println("Motors Braked!");
+  }
 
-      System.out.println("Motors Braked!");
-      }
+  public double getWinchAngle() {
+    return winchMotor.getSelectedSensorPosition();
+  }
 
-    public double getWinchAngle() {
-      return winchMotor.getSelectedSensorPosition();
-    }
-
-    @Override
-    public void periodic(){
+  @Override
+  public void periodic(){
 
   }
 }
